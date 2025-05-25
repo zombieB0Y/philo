@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3
-SRC = philo.c
+SRC = philo.c init_functions.c setup.c garbage_collector.c
 OBJ = $(SRC:.c=.o)
 NAME = philo
 all: $(NAME)
@@ -8,9 +8,9 @@ $(NAME): $(OBJ) philo.h
 	$(CC) $(OBJ) -lpthread -o $(NAME)
 
 clean:
-	rm $(OBJ)
+	rm -f $(OBJ)
 
 fclean: clean
-	rm $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
