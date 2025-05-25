@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:29 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/25 17:24:46 by zm               ###   ########.fr       */
+/*   Updated: 2025/05/25 22:07:54 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 #include <sys/time.h>
 #include <stdbool.h>
 
+typedef struct s_philo
+{
+	int		t_to_die;
+	int		n_philo;
+	int		t_to_eat;
+	int		t_to_sleep;
+}			t_philo;
 // Node to track allocated pointers
 typedef struct t_GCNode
 {
@@ -32,7 +39,7 @@ typedef struct s_seats
 {
 	pthread_t	philosopher_ID;
 	int			seat_number;
-	bool		fork;
+	t_philo     *philo;
 	void		*next;
 }				t_seats;
 
@@ -43,20 +50,15 @@ typedef struct s_philosophers
 	size_t		size;
 }				t_philosophers;
 
+
+
 typedef struct s_status
 {
 	t_GCNode    *g_head;
+	t_philosophers  *table;
+	t_philo         *philo;
 	bool		is_dead;
 }               t_status;
-
-typedef struct s_philo
-{
-	int		t_to_die;
-	int		n_philo;
-	int		t_to_eat;
-	int		t_to_sleep;
-}			t_philo;
-
 // -------------------------
 t_philosophers	*init_table(void);
 void    start_the_simulation(t_philosophers *table, t_philo *philo);
