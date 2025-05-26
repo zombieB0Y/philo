@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:36 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/26 15:48:55 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/26 21:42:53 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,7 @@ int main(int argc, char **argv)
 		return (1);
 	start_the_simulation(table, philo);
 	gc_collect();
-	// while (i < num_philosophers)
-	// {
-	// 	printf("hani hna\n");
-		// pthread_t	thread;
-		// int *thread_return = NULL;
-		/*int thread_return = */
-		// if (!pthread_create(&thread, NULL, worker_routine(), NULL))
-			// return 1;
-		// ft_sleep(time_to_eat);
-		// sleep(5);
-		// pthread_join(thread, NULL);
-	// 	i++;
-	// }
+	
 	return (0);
 }
 

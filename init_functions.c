@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:02:56 by zm                #+#    #+#             */
-/*   Updated: 2025/05/25 17:24:46 by zm               ###   ########.fr       */
+/*   Updated: 2025/05/26 22:06:56 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ t_philo	*init_status(char **argv)
 	int time_to_die = atoi(argv[2]);
 	int time_to_eat = atoi(argv[3]);
 	int time_to_sleep = atoi(argv[4]);
-
+	pthread_mutex_init(&philo()->death, NULL);
+	pthread_mutex_init(&philo()->meal, NULL);
 	t_philo	*philo = gc_malloc(sizeof(t_philo));
 	if (!philo)
 		return (NULL);
