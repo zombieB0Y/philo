@@ -6,83 +6,84 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:36 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/25 22:15:16 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/26 15:48:55 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	a = 0;
-pthread_mutex_t	mutex;
-void	*run(void *arg)
-{
-	long long i = 0;
-	while (i < 1000000)
-	{
-		pthread_mutex_lock(&mutex);
-		a++;
-		pthread_mutex_unlock(&mutex);
-		i++;
-	}
-	return NULL;
-}
+// int	a = 0;
+// pthread_mutex_t	mutex;
+// void	*run(void *arg)
+// {
+// 	long long i = 0;
+// 	while (i < 1000000)
+// 	{
+// 		pthread_mutex_lock(&mutex);
+// 		a++;
+// 		pthread_mutex_unlock(&mutex);
+// 		i++;
+// 	}
+// 	return NULL;
+// }
 
-int main()
-{
-	pthread_t	alo1;
-	pthread_t	alo2;
-	pthread_create(&alo1, NULL, run, NULL);
-	pthread_create(&alo2, NULL, run, NULL);
-	pthread_join(alo1, NULL);
-	pthread_join(alo2, NULL);
-	printf("total drink %d\n", a);
-	return 0;
-}
+// int main()
+// {
+// 	pthread_t	alo1 = 0;
+// 	pthread_t	alo2;
+// 	pthread_create(&alo1, NULL, run, NULL);
+// 	printf("%ld\n", alo1);
+// 	pthread_create(&alo2, NULL, run, NULL);
+// 	pthread_join(alo1, NULL);
+// 	pthread_join(alo2, NULL);
+// 	printf("total drink %d\n", a);
+// 	return 0;
+// }
 
 // This function represents the routine (task) our workers (threads) will execute.
-// void *worker_routine(void *arg)
-// {
-// 	(void)arg;
-// 	// All workers (threads) inside the factory (process) will print the same address (PID)
-// 	printf("Worker ID->%lu: My factory's address (PID) is %d\n", pthread_self(), getpid());
-// 	return (NULL);
-// }
+void *worker_routine(void *arg)
+{
+	(void)arg;
+	// All workers (threads) inside the factory (process) will print the same address (PID)
+	printf("Worker ID->%lu: My factory's address (PID) is %d\n", pthread_self(), getpid());
+	return (NULL);
+}
 
-// t_status *philo(void)
-// {
-// 	static t_status status;
-// 	return (&status);
-// }
+t_status *philo(void)
+{
+	static t_status status;
+	return (&status);
+}
 
 
-// int main(int argc, char **argv)
-// {
-// 	t_philo	*philo;
+int main(int argc, char **argv)
+{
+	t_philo	*philo;
 
-// 	philo = init_status(argv);
-// 	(void)argc;
-// 	t_philosophers	*table;
+	philo = init_status(argv);
+	(void)argc;
+	t_philosophers	*table;
 
-// 	table = init_table();
-// 	if (!table)
-// 		return (1);
-// 	start_the_simulation(table, philo);
-// 	gc_collect();
-// 	// while (i < num_philosophers)
-// 	// {
-// 	// 	printf("hani hna\n");
-// 		// pthread_t	thread;
-// 		// int *thread_return = NULL;
-// 		/*int thread_return = */
-// 		// if (!pthread_create(&thread, NULL, worker_routine(), NULL))
-// 			// return 1;
-// 		// ft_sleep(time_to_eat);
-// 		// sleep(5);
-// 		// pthread_join(thread, NULL);
-// 	// 	i++;
-// 	// }
-// 	return (0);
-// }
+	table = init_table();
+	if (!table)
+		return (1);
+	start_the_simulation(table, philo);
+	gc_collect();
+	// while (i < num_philosophers)
+	// {
+	// 	printf("hani hna\n");
+		// pthread_t	thread;
+		// int *thread_return = NULL;
+		/*int thread_return = */
+		// if (!pthread_create(&thread, NULL, worker_routine(), NULL))
+			// return 1;
+		// ft_sleep(time_to_eat);
+		// sleep(5);
+		// pthread_join(thread, NULL);
+	// 	i++;
+	// }
+	return (0);
+}
 
 // int main(void)
 // {

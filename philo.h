@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:29 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/25 22:07:54 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/26 16:19:53 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ typedef struct t_GCNode
 
 typedef struct s_seats
 {
-	pthread_t	philosopher_ID;
-	int			seat_number;
-	t_philo     *philo;
-	void		*next;
-}				t_seats;
+	pthread_t		philosopher_ID;
+	pthread_mutex_t	fork;
+	int				seat_number;
+	t_philo			*philo;
+	struct s_seats	*next;
+}					t_seats;
 
 typedef struct s_philosophers
 {
@@ -61,6 +62,10 @@ typedef struct s_status
 }               t_status;
 // -------------------------
 t_philosophers	*init_table(void);
+void	add_a_seat(t_philosophers *table, t_seats *philosopher);
+t_seats	*create_philosopher(t_philosophers *table, int	ID);
+void	run(void);
+void	*start(void	*arg);
 void    start_the_simulation(t_philosophers *table, t_philo *philo);
 t_status        *philo(void);
 t_philo	*init_status(char **argv);
