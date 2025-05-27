@@ -6,48 +6,11 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:36 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/26 21:42:53 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/27 21:56:34 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-// int	a = 0;
-// pthread_mutex_t	mutex;
-// void	*run(void *arg)
-// {
-// 	long long i = 0;
-// 	while (i < 1000000)
-// 	{
-// 		pthread_mutex_lock(&mutex);
-// 		a++;
-// 		pthread_mutex_unlock(&mutex);
-// 		i++;
-// 	}
-// 	return NULL;
-// }
-
-// int main()
-// {
-// 	pthread_t	alo1 = 0;
-// 	pthread_t	alo2;
-// 	pthread_create(&alo1, NULL, run, NULL);
-// 	printf("%ld\n", alo1);
-// 	pthread_create(&alo2, NULL, run, NULL);
-// 	pthread_join(alo1, NULL);
-// 	pthread_join(alo2, NULL);
-// 	printf("total drink %d\n", a);
-// 	return 0;
-// }
-
-// This function represents the routine (task) our workers (threads) will execute.
-void *worker_routine(void *arg)
-{
-	(void)arg;
-	// All workers (threads) inside the factory (process) will print the same address (PID)
-	printf("Worker ID->%lu: My factory's address (PID) is %d\n", pthread_self(), getpid());
-	return (NULL);
-}
 
 t_status *philo(void)
 {
@@ -55,20 +18,21 @@ t_status *philo(void)
 	return (&status);
 }
 
-
 int main(int argc, char **argv)
 {
-	t_philo	*philo;
+	t_philo	*arg;
 
-	philo = init_status(argv);
+	arg = init_status(argv);
 	(void)argc;
 	t_philosophers	*table;
 
 	table = init_table();
 	if (!table)
 		return (1);
-	start_the_simulation(table, philo);
+	start_the_simulation(table, arg);
 	gc_collect();
+	pthread_mutex_destroy(&philo()->meal);
+	pthread_mutex_destroy(&philo()->death);
 	
 	return (0);
 }

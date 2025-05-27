@@ -6,11 +6,18 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:04:49 by zm                #+#    #+#             */
-/*   Updated: 2025/05/26 22:12:54 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/27 22:36:14 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	slp(int time)
+{
+	int	(i) = 0;
+	while ( i < (time * 100))
+		i++;
+}
 
 int	is_dead()
 {
@@ -51,13 +58,13 @@ void	eat(t_seats *seat)
 	pthread_mutex_t	*next_fork = &seat->next->fork;
 	if (seat->seat_number % 2)
 	{
-		pthread_mutex_lock(my_fork);
 		pthread_mutex_lock(next_fork);
+		pthread_mutex_lock(my_fork);
 	}
 	else
 	{
-		pthread_mutex_lock(next_fork);
 		pthread_mutex_lock(my_fork);		
+		pthread_mutex_lock(next_fork);
 	}
 	// usleep(seat->philo->t_to_eat);
 	if (is_dead())
@@ -69,8 +76,8 @@ void	eat(t_seats *seat)
 		return ;
 	printf("%d is eating ...\n", seat->seat_number);
 	//set last time eaten
-	if (is_dead())
-		return ;
+	// if (is_dead())
+	// 	return ;
 	usleep(seat->philo->t_to_eat * 1000);
 	if (seat->seat_number % 2)
 	{
@@ -94,7 +101,6 @@ t_seats	*create_philosopher(t_philosophers *table, int	ID)
 	philosopher->next = table->head;
 	philosopher->philosopher_ID = 0;
 	pthread_mutex_init(&philosopher->fork, NULL);
-	philosopher->last_meal = return_time();
 	philosopher->seat_number = ID + 1;
 	philosopher->philo = philo()->philo;
 	return (philosopher);
@@ -135,12 +141,11 @@ void	think(t_seats *seat)
 
 void	*start(void	*arg)
 {
-	// int		count = 0;
-	// t_philo	*philo = (t_philo *)arg;
 	t_seats	*seat = (t_seats *)arg;
-	while (!is_dead())
+	while (1)
 	{
-		// if (count == philo->t_to_die)
+		if (is_dead())
+			 break ;
 		eat(seat);
 		ft_sleep(seat);
 		think(seat);
@@ -174,12 +179,16 @@ void	run(void)
 	pthread_t	mod = 0;
 	while (counter < philo()->table->size)
 	{
+		curr->last_meal = return_time();
 		pthread_create(&curr->philosopher_ID, NULL, start, curr);
 		curr = curr->next;
 		counter++;
 	}
-	pthread_create(&mod, NULL, moderator, NULL);
-	pthread_join(mod, NULL);
+	// if (mod == 0)
+	// {
+		pthread_create(&mod, NULL, moderator, NULL);
+		pthread_join(mod, NULL);
+	// }
 	counter = 0;
 	curr = philo()->table->head;
 	while (counter < philo()->table->size)

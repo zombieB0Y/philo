@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:29 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/26 22:06:45 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/27 22:15:19 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	add_a_seat(t_philosophers *table, t_seats *philosopher);
 t_seats	*create_philosopher(t_philosophers *table, int	ID);
 void	run(void);
 void	*start(void	*arg);
+void	slp(int time);
 void    start_the_simulation(t_philosophers *table, t_philo *philo);
 t_status        *philo(void);
 long int    return_time(void);
