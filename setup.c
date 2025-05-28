@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:04:49 by zm                #+#    #+#             */
-/*   Updated: 2025/05/27 22:36:14 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/28 21:56:07 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	slp(int time)
 {
-	int	(i) = 0;
-	while ( i < (time * 100))
-		i++;
+	long long	(i) = return_time();
+	while ((return_time() - i) < time)
+		;
 }
 
 int	is_dead()
@@ -52,19 +52,30 @@ void    start_the_simulation(t_philosophers *table, t_philo *arg)
 }
 void	eat(t_seats *seat)
 {
+	long long	(i) = 0;
 	if (is_dead())
 		return ;
 	pthread_mutex_t	*my_fork = &seat->fork;
 	pthread_mutex_t	*next_fork = &seat->next->fork;
 	if (seat->seat_number % 2)
 	{
-		pthread_mutex_lock(next_fork);
+		pthread_mutex_lock(&i_mutex);
+		i = return_time();
+		pthread_mutex_unlock(&i_mutex);
 		pthread_mutex_lock(my_fork);
+		printf("[%lld] %d pick up a fork !\n", (return_time() - i), seat->seat_number);
+		pthread_mutex_lock(next_fork); // deadlock d zeb
+		printf("[%lld] %d pick up a fork !\n", (return_time() - i), seat->seat_number);
 	}
 	else
 	{
+		pthread_mutex_lock(&i_mutex);
+		i = return_time();
+		pthread_mutex_unlock(&i_mutex);
 		pthread_mutex_lock(my_fork);		
+		printf("[%lld] %d pick up a fork !\n", (return_time() - i), seat->seat_number);
 		pthread_mutex_lock(next_fork);
+		printf("[%lld] %d pick up a fork !\n", (return_time() - i), seat->seat_number);
 	}
 	// usleep(seat->philo->t_to_eat);
 	if (is_dead())
@@ -72,22 +83,36 @@ void	eat(t_seats *seat)
 	pthread_mutex_lock(&philo()->meal);
 	seat->last_meal = return_time();
 	pthread_mutex_unlock(&philo()->meal);
-	if (is_dead())
-		return ;
-	printf("%d is eating ...\n", seat->seat_number);
+	pthread_mutex_lock(&i_mutex);
+	i = return_time();
+	pthread_mutex_unlock(&i_mutex);
+	printf("[%lld] %d is eating ...\n", (return_time() - i), seat->seat_number);
 	//set last time eaten
 	// if (is_dead())
 	// 	return ;
-	usleep(seat->philo->t_to_eat * 1000);
+	slp(seat->philo->t_to_eat);
+	// usleep(seat->philo->t_to_eat * 1000);
+	if (is_dead())
+		return ;
 	if (seat->seat_number % 2)
 	{
-		pthread_mutex_unlock(next_fork);
+		pthread_mutex_lock(&i_mutex);
+		i = return_time();
+		pthread_mutex_unlock(&i_mutex);
 		pthread_mutex_unlock(my_fork);
+		printf("[%lld] %d put down a fork !\n", (return_time() - i), seat->seat_number);
+		pthread_mutex_unlock(next_fork);
+		printf("[%lld] %d put down a fork !\n", (return_time() - i), seat->seat_number);
 	}
 	else
 	{
-		pthread_mutex_unlock(my_fork);		
+		pthread_mutex_lock(&i_mutex);
+		i = return_time();
+		pthread_mutex_unlock(&i_mutex);
 		pthread_mutex_unlock(next_fork);
+		printf("[%lld] %d put down a fork !\n", (return_time() - i), seat->seat_number);
+		pthread_mutex_unlock(my_fork);
+		printf("[%lld] %d put down a fork !\n", (return_time() - i), seat->seat_number);
 	}
 }
 
@@ -125,17 +150,28 @@ void	add_a_seat(t_philosophers *table, t_seats *philosopher)
 
 void	ft_sleep(t_seats *seat)
 {
+	long long	i = 0;
 	if (is_dead())
 	return ;
-	printf("%d is sleeping ...\n", seat->seat_number);
-	usleep(seat->philo->t_to_sleep);
+	pthread_mutex_lock(&i_mutex);
+	i = return_time();
+	pthread_mutex_unlock(&i_mutex);
+	printf("[%lld] %d is sleeping ...\n", (return_time() - i), seat->seat_number);
+	slp(seat->philo->t_to_sleep);
+	if (is_dead())
+		return ;
+	// usleep(seat->philo->t_to_sleep);
 }
 
 void	think(t_seats *seat)
 {
+	long long	i = 0;
 	if (is_dead())
 		return ;
-	printf("%d is thinking ...\n", seat->seat_number);
+	pthread_mutex_lock(&i_mutex);
+	i = return_time();
+	pthread_mutex_unlock(&i_mutex);
+	printf("[%lld] %d is thinking ...\n", (return_time() - i), seat->seat_number);
 }
 
 
@@ -146,6 +182,9 @@ void	*start(void	*arg)
 	{
 		if (is_dead())
 			 break ;
+		pthread_mutex_lock(&i_mutex);
+		i = return_time();
+		pthread_mutex_unlock(&i_mutex);
 		eat(seat);
 		ft_sleep(seat);
 		think(seat);
@@ -187,7 +226,6 @@ void	run(void)
 	// if (mod == 0)
 	// {
 		pthread_create(&mod, NULL, moderator, NULL);
-		pthread_join(mod, NULL);
 	// }
 	counter = 0;
 	curr = philo()->table->head;
@@ -197,5 +235,6 @@ void	run(void)
 		curr = curr->next;
 		counter++;
 	}
+		pthread_join(mod, NULL);
 }
 

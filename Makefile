@@ -6,7 +6,7 @@ NAME = philo
 
 all: $(NAME)
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -lpthread -fsanitize=thread -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) -lpthread -fsanitize=thread -o $(NAME)
 
 clean:
 	rm -f $(OBJ)
