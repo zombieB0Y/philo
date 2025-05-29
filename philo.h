@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:29 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/28 21:08:47 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:49:16 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <stdbool.h>
-
-extern long long i;
-extern pthread_mutex_t i_mutex;
-extern pthread_mutex_t time_mutex;
-
 
 typedef struct s_philo
 {
@@ -66,6 +61,8 @@ typedef struct s_status
 	t_philo         *philo;
 	bool			is_dead;
 	pthread_mutex_t	death;
+	pthread_mutex_t	time_mutex;
+	long long		time;
 	pthread_mutex_t	sleep;
 	pthread_mutex_t	meal;
 }               t_status;

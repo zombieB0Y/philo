@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:02:56 by zm                #+#    #+#             */
-/*   Updated: 2025/05/28 19:43:53 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:50:10 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_philo	*init_status(char **argv)
 	int time_to_eat = atoi(argv[3]);
 	int time_to_sleep = atoi(argv[4]);
 	pthread_mutex_init(&philo()->death, NULL);
+	pthread_mutex_init(&philo()->time_mutex, NULL);
 	pthread_mutex_init(&philo()->meal, NULL);
 	pthread_mutex_init(&philo()->sleep, NULL);
 	t_philo	*philo = gc_malloc(sizeof(t_philo));

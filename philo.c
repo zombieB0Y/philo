@@ -6,21 +6,41 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:36 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/28 21:09:16 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:48:50 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-long long i = 0;
-pthread_mutex_t i_mutex = PTHREAD_MUTEX_INITIALIZER;
-pthread_mutex_t time_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 t_status *philo(void)
 {
 	static t_status status;
 	return (&status);
 }
+
+// #define BOLD_CYAN "\033[1;36m"
+// #define RESET "\033[0m"
+
+// int main()
+// {
+//     struct timeval start, end;
+
+// 	pthread_mutex_init(&philo()->time_mutex, NULL);
+//     gettimeofday(&start, NULL); // Get the current time before sleeping
+//     // usleep(500000);  // Expected sleep: 500 milliseconds (0.5 seconds)
+//     slp(500);
+//     gettimeofday(&end, NULL);  // Get the time after sleeping
+
+//     long seconds = end.tv_sec - start.tv_sec;
+//     long microseconds = end.tv_usec - start.tv_usec;
+
+//     double elapsedMilliseconds = (seconds * 1000.0) + (microseconds / 1000.0);
+
+//     printf("Expected sleep duration: "BOLD_CYAN"\t500 milliseconds\n"RESET);
+//     printf("Actual sleep duration: "BOLD_CYAN"\t\t%.2f milliseconds\n\n"RESET, elapsedMilliseconds);
+
+//     return 0;
+// }
 
 int main(int argc, char **argv)
 {
@@ -33,10 +53,11 @@ int main(int argc, char **argv)
 	table = init_table();
 	if (!table)
 		return (1);
-	i = return_time();
 	start_the_simulation(table, arg);
 	gc_collect();
 	pthread_mutex_destroy(&philo()->meal);
+	pthread_mutex_destroy(&philo()->time_mutex);
+	pthread_mutex_destroy(&philo()->sleep);
 	pthread_mutex_destroy(&philo()->death);
 	
 	return (0);
