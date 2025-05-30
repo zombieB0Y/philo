@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:29 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/29 13:49:16 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:02:28 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ typedef struct s_status
 	t_philo         *philo;
 	bool			is_dead;
 	pthread_mutex_t	death;
+	pthread_mutex_t	write;
 	pthread_mutex_t	time_mutex;
 	long long		time;
 	pthread_mutex_t	sleep;
@@ -73,6 +74,8 @@ t_seats	*create_philosopher(t_philosophers *table, int	ID);
 void	run(void);
 void	*start(void	*arg);
 void	slp(int time);
+int	is_dead();
+void    print_msg(size_t seat_number, char *stat);
 void    start_the_simulation(t_philosophers *table, t_philo *philo);
 t_status        *philo(void);
 long long    return_time(void);

@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:36 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/29 14:48:50 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/30 15:52:34 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int main(int argc, char **argv)
 	pthread_mutex_destroy(&philo()->time_mutex);
 	pthread_mutex_destroy(&philo()->sleep);
 	pthread_mutex_destroy(&philo()->death);
+	pthread_mutex_destroy(&philo()->write);
 	
 	return (0);
 }

@@ -1,6 +1,6 @@
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=thread
-SRC = philo.c init_functions.c setup.c garbage_collector.c utils.c
+SRC = philo.c init_functions.c setup.c garbage_collector.c utils.c simple_tools.c
 OBJ = $(SRC:.c=.o)
 NAME = philo
 
