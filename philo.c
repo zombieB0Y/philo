@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:36 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/30 15:52:34 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:32:26 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ int main(int argc, char **argv)
 	start_the_simulation(table, arg);
 	gc_collect();
 	pthread_mutex_destroy(&philo()->meal);
-	pthread_mutex_destroy(&philo()->time_mutex);
-	pthread_mutex_destroy(&philo()->sleep);
 	pthread_mutex_destroy(&philo()->death);
 	pthread_mutex_destroy(&philo()->write);
 	

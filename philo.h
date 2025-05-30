@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:29 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/30 16:02:28 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/30 20:27:53 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,7 @@ typedef struct s_status
 	bool			is_dead;
 	pthread_mutex_t	death;
 	pthread_mutex_t	write;
-	pthread_mutex_t	time_mutex;
 	long long		time;
-	pthread_mutex_t	sleep;
 	pthread_mutex_t	meal;
 }               t_status;
 // -------------------------
