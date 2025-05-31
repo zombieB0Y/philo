@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:36 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/30 20:32:26 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/31 04:11:07 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ int main(int argc, char **argv)
 
 	arg = init_status(argv);
 	(void)argc;
-	t_philosophers	*table;
-
-	table = init_table();
-	if (!table)
-		return (1);
+	t_philosophers	*table = NULL;
 	start_the_simulation(table, arg);
 	gc_collect();
 	pthread_mutex_destroy(&philo()->meal);

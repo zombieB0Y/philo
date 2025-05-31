@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:02:56 by zm                #+#    #+#             */
-/*   Updated: 2025/05/30 20:27:54 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/31 04:21:26 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,13 @@ t_philosophers	*init_table(void)
 	table = gc_malloc(sizeof(t_philosophers));
 	if (!table)
 		return NULL;
-	memset(table, 0, sizeof(t_philosophers));
+	table->seats_array = gc_malloc(sizeof(t_seats) * philo()->philo->n_philo);
+	table->size = philo()->philo->n_philo;
+	// memset(table, 0, sizeof(t_philosophers));
 	return (table);
 }
+
+
 
 t_philo	*init_status(char **argv)
 {
