@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:29 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/31 17:06:03 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/05/31 17:41:55 by zm               ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void					add_a_seat(t_philosophers *table, t_seats *philosopher);
 t_seats					*create_philosopher(t_philosophers *table, int ID);
 void					run(void);
 void					*start(void *arg);
-void					slp(long time);
+void					slp(int time);
 int						is_dead(void);
 void					print_msg(size_t seat_number, char *stat);
 void					start_the_simulation(t_philosophers *table,
