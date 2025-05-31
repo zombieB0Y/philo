@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setup.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:04:49 by zm                #+#    #+#             */
-/*   Updated: 2025/05/31 17:50:52 by zm               ###   ########.fr       */
+/*   Updated: 2025/05/31 18:21:24 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 void	slp(int time)
 {
 	long long	(i) = return_time();
-	while ((return_time() - i) < time);
-		// usleep(50);
+	while ((return_time() - i) < time)
+	{
+		if (is_dead())
+			return ;
+		usleep(500);
+	}
 }
 
 int	is_dead()
@@ -56,48 +60,44 @@ void	eat(t_seats *seat)
 		return ;
 	pthread_mutex_t	*my_fork = &seat->my_fork;
 	pthread_mutex_t	*next_fork = &seat->next->my_fork;
+	pthread_mutex_t	*meal = &philo()->meal;
 	if (seat->seat_number % 2)
 	{
 		pthread_mutex_lock(next_fork);
-		print_msg(seat->seat_number, "has taken a fork");
 		pthread_mutex_lock(my_fork);
 		print_msg(seat->seat_number, "has taken a fork");
-		if (is_dead())
-		{
-			pthread_mutex_unlock(next_fork);
-			pthread_mutex_unlock(my_fork);
-			return ;
-		}
+		print_msg(seat->seat_number, "has taken a fork");
 	}
 	else
 	{
 		pthread_mutex_lock(my_fork);
-		print_msg(seat->seat_number, "has taken a fork");
 		pthread_mutex_lock(next_fork);
 		print_msg(seat->seat_number, "has taken a fork");
-		if (is_dead())
-		{
-			pthread_mutex_unlock(my_fork);
-			pthread_mutex_unlock(next_fork);
-			return ;
-		}
+		print_msg(seat->seat_number, "has taken a fork");
+
 	}
-	pthread_mutex_lock(&philo()->meal);
-	seat->last_meal = return_time();
-	pthread_mutex_unlock(&philo()->meal);
-	print_msg(seat->seat_number, "is eating");
-	if (!is_dead())
-		slp(seat->philo->t_to_eat);
-	// if (seat->seat_number % 2)
-	// {
+	if (is_dead())
+	{
 		pthread_mutex_unlock(my_fork);
 		pthread_mutex_unlock(next_fork);
-	// }
-	// else
-	// {
-	// 	pthread_mutex_unlock(next_fork);
-	// 	pthread_mutex_unlock(my_fork);
-	// }
+		return ;
+	}
+	print_msg(seat->seat_number, "is eating");
+	pthread_mutex_lock(meal);
+	seat->last_meal = return_time();
+	pthread_mutex_unlock(meal);
+	// if (!is_dead())
+	slp(seat->philo->t_to_eat);
+	if (seat->seat_number % 2)
+	{
+		pthread_mutex_unlock(next_fork);
+		pthread_mutex_unlock(my_fork);
+	}
+	else
+	{
+		pthread_mutex_unlock(my_fork);
+		pthread_mutex_unlock(next_fork);
+	}
 }
 
 t_seats	*create_philosopher(t_philosophers *table , int ID)
@@ -155,7 +155,8 @@ void	*start(void	*arg)
 	{
 		eat(seat);
 		ft_sleep(seat);
-		think(seat);
+		if (!is_dead())
+			think(seat);
 	}
 	return (NULL);
 }
@@ -172,24 +173,18 @@ void	*moderator(void *arg)
 	curr = table->head;
 	while (1)
 	{
-		// i = 0;
-		// while (1)
-		// {
-			if (return_time() - get_last_meal(curr) > t_to_die)
-			{
-				print_msg(curr->seat_number, "died");
-				pthread_mutex_lock(&philo()->death);
-				philo()->is_dead = true;
-				pthread_mutex_unlock(&philo()->death);
-				return (NULL);
-			}
-			curr = curr->next;
-		// }
+		if (return_time() - get_last_meal(curr) > t_to_die)
+		{
+			print_msg(curr->seat_number, "died");
+			// print_died(curr->seat_number);
+			pthread_mutex_lock(&philo()->death);
+			philo()->is_dead = true;
+			pthread_mutex_unlock(&philo()->death);
+			return (NULL);
+		}
+		curr = curr->next;
 		// usleep(500);
 	}
-	// if (table->meals_required != -1 && check_if_all_ate(table))
-	// 	return (NULL);
-	// if (!is_critical_time())
 	return (NULL);
 }
 

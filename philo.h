@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:29 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/31 17:41:55 by zm               ###   ########.fr       */
+/*   Updated: 2025/05/31 18:13:38 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void					print_msg(size_t seat_number, char *stat);
 void					start_the_simulation(t_philosophers *table,
 							t_philo *philo);
 t_status				*philo(void);
-void					assign_next_fork(t_philosophers *table, size_t ID);
+void    print_died(size_t seat_number);
 long long				return_time(void);
 t_philo					*init_status(char **argv);
 void					*gc_malloc(size_t size);
