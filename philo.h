@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:29 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/31 04:16:58 by zm               ###   ########.fr       */
+/*   Updated: 2025/05/31 17:06:03 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,17 @@ typedef struct s_seats
 {
 	pthread_t			philosopher_ID;
 	pthread_mutex_t		my_fork;
-	pthread_mutex_t		next_fork;
 	int					seat_number;
 	long long			last_meal;
 	t_philo				*philo;
-	// struct s_seats	*next;
+	struct s_seats	*next;
 }						t_seats;
 
 typedef struct s_philosophers
 {
-	// t_seats		*head;
-	// t_seats		*tail;
-	t_seats				*seats_array;
-	size_t				size;
+	t_seats		*head;
+	t_seats		*tail;
+	size_t		size;
 }						t_philosophers;
 
 typedef struct timeval	t_timeval;
@@ -64,13 +62,14 @@ typedef struct s_status
 	bool				is_dead;
 	pthread_mutex_t		death;
 	pthread_mutex_t		write;
+	pthread_mutex_t		time_mutex;
 	long long			time;
 	pthread_mutex_t		meal;
 }						t_status;
 // -------------------------
 t_philosophers			*init_table(void);
 void					add_a_seat(t_philosophers *table, t_seats *philosopher);
-t_seats					*create_philosopher(int ID);
+t_seats					*create_philosopher(t_philosophers *table, int ID);
 void					run(void);
 void					*start(void *arg);
 void					slp(long time);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zm <zm@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:02:56 by zm                #+#    #+#             */
-/*   Updated: 2025/05/31 04:21:26 by zm               ###   ########.fr       */
+/*   Updated: 2025/05/31 16:30:16 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,9 @@ t_philosophers	*init_table(void)
 	table = gc_malloc(sizeof(t_philosophers));
 	if (!table)
 		return NULL;
-	table->seats_array = gc_malloc(sizeof(t_seats) * philo()->philo->n_philo);
-	table->size = philo()->philo->n_philo;
-	// memset(table, 0, sizeof(t_philosophers));
+	memset(table, 0, sizeof(t_philosophers));
 	return (table);
 }
-
-
 
 t_philo	*init_status(char **argv)
 {
@@ -36,6 +32,7 @@ t_philo	*init_status(char **argv)
 	pthread_mutex_init(&philo()->death, NULL);
 	pthread_mutex_init(&philo()->write, NULL);
 	pthread_mutex_init(&philo()->meal, NULL);
+	pthread_mutex_init(&philo()->time_mutex, NULL);
 	t_philo	*philo = gc_malloc(sizeof(t_philo));
 	if (!philo)
 		return (NULL);
