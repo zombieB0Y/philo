@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:04:49 by zm                #+#    #+#             */
-/*   Updated: 2025/05/31 18:21:24 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/06/16 15:13:14 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@ void	slp(int time)
 	long long	(i) = return_time();
 	while ((return_time() - i) < time)
 	{
+		/*
 		if (is_dead())
 			return ;
 		usleep(500);
+		*/
+		;
 	}
 }
 
@@ -39,6 +42,7 @@ long int	get_last_meal(t_seats *curr)
 	pthread_mutex_unlock(&philo()->meal);
 	return (last);
 }
+
 void    start_the_simulation(t_philosophers *table, t_philo *arg)
 {
 	int	i;
@@ -54,6 +58,7 @@ void    start_the_simulation(t_philosophers *table, t_philo *arg)
 	}
 	run();
 }
+
 void	eat(t_seats *seat)
 {
 	if (is_dead())
@@ -64,15 +69,15 @@ void	eat(t_seats *seat)
 	if (seat->seat_number % 2)
 	{
 		pthread_mutex_lock(next_fork);
-		pthread_mutex_lock(my_fork);
 		print_msg(seat->seat_number, "has taken a fork");
+		pthread_mutex_lock(my_fork);
 		print_msg(seat->seat_number, "has taken a fork");
 	}
 	else
 	{
 		pthread_mutex_lock(my_fork);
-		pthread_mutex_lock(next_fork);
 		print_msg(seat->seat_number, "has taken a fork");
+		pthread_mutex_lock(next_fork);
 		print_msg(seat->seat_number, "has taken a fork");
 
 	}
@@ -90,8 +95,8 @@ void	eat(t_seats *seat)
 	slp(seat->philo->t_to_eat);
 	if (seat->seat_number % 2)
 	{
-		pthread_mutex_unlock(next_fork);
 		pthread_mutex_unlock(my_fork);
+		pthread_mutex_unlock(next_fork);
 	}
 	else
 	{
@@ -142,9 +147,9 @@ void	ft_sleep(t_seats *seat)
 void	think(t_seats *seat)
 {
 	print_msg(seat->seat_number, "is thinking");
-	// if (philo()->philo->n_philo % 2 != 0
-	// 	&& (philo()->philo->t_to_eat * 3) <= philo()->philo->t_to_die)
-	// 	slp(1);
+	if (philo()->philo->n_philo % 2 != 0
+		&& (philo()->philo->t_to_eat * 3) <= philo()->philo->t_to_die)
+		slp(1);
 }
 
 
@@ -176,7 +181,6 @@ void	*moderator(void *arg)
 		if (return_time() - get_last_meal(curr) > t_to_die)
 		{
 			print_msg(curr->seat_number, "died");
-			// print_died(curr->seat_number);
 			pthread_mutex_lock(&philo()->death);
 			philo()->is_dead = true;
 			pthread_mutex_unlock(&philo()->death);
@@ -199,12 +203,12 @@ void	run(void)
 	while (counter < n_philo)
 	{
 		curr->last_meal = return_time();
-		if ((counter + 1) % 2)
-		{
+		// if ((counter + 1) % 2)
+		// {
 			pthread_create(&curr->philosopher_ID, NULL, start, curr);
-		}
-		else
-			pthread_create(&curr->philosopher_ID, NULL, start, curr);
+		// }
+		// else
+		// 	pthread_create(&curr->philosopher_ID, NULL, start, curr);
 		curr = curr->next;
 		counter++;	
 	}
