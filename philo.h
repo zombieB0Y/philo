@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:29 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/05/31 18:13:38 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:07:06 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,12 @@ int						is_dead(void);
 void					print_msg(size_t seat_number, char *stat);
 void					start_the_simulation(t_philosophers *table,
 							t_philo *philo);
+int						ft_atoi(const char *str);
+int	ft_isdigit(int c);
 t_status				*philo(void);
-void    print_died(size_t seat_number);
 long long				return_time(void);
-t_philo					*init_status(char **argv);
+t_philo					*init_status(int ac, char **argv);
+bool					lone_philo(void);
 void					*gc_malloc(size_t size);
 void					gc_collect(void);
 

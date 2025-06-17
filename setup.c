@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:04:49 by zm                #+#    #+#             */
-/*   Updated: 2025/06/16 15:13:14 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/06/17 16:04:56 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,9 @@ void	slp(int time)
 	long long	(i) = return_time();
 	while ((return_time() - i) < time)
 	{
-		/*
 		if (is_dead())
 			return ;
 		usleep(500);
-		*/
-		;
 	}
 }
 
@@ -48,7 +45,6 @@ void    start_the_simulation(t_philosophers *table, t_philo *arg)
 	int	i;
 
 	i = 0;
-	philo()->philo = arg;
 	philo()->table = table;
 	philo()->is_dead = false;
 	while (i < arg->n_philo)
@@ -147,9 +143,10 @@ void	ft_sleep(t_seats *seat)
 void	think(t_seats *seat)
 {
 	print_msg(seat->seat_number, "is thinking");
-	if (philo()->philo->n_philo % 2 != 0
-		&& (philo()->philo->t_to_eat * 3) <= philo()->philo->t_to_die)
+	if (philo()->philo->n_philo % 2 != 0)
 		slp(1);
+	if (is_dead())
+		return ;
 }
 
 
@@ -187,7 +184,6 @@ void	*moderator(void *arg)
 			return (NULL);
 		}
 		curr = curr->next;
-		// usleep(500);
 	}
 	return (NULL);
 }
@@ -203,12 +199,7 @@ void	run(void)
 	while (counter < n_philo)
 	{
 		curr->last_meal = return_time();
-		// if ((counter + 1) % 2)
-		// {
-			pthread_create(&curr->philosopher_ID, NULL, start, curr);
-		// }
-		// else
-		// 	pthread_create(&curr->philosopher_ID, NULL, start, curr);
+		pthread_create(&curr->philosopher_ID, NULL, start, curr);
 		curr = curr->next;
 		counter++;	
 	}
