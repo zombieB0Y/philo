@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 21:05:52 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/06/17 15:39:37 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/06/17 20:48:46 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	ft_atoi(const char *str)
 {
 	int		i;
 	int		sign;
-	size_t	result;
+	int		result;
+	philo()->error = false;
 
 	i = 0;
 	result = 0;
@@ -39,9 +40,16 @@ int	ft_atoi(const char *str)
 	}
 	while (ft_isdigit(str[i]))
 	{
+		if (result * 10 > __INT_MAX__)
+		{
+			philo()->error = true;
+			break ;
+		}
 		result = (result * 10) + str[i] - '0';
 		i++;
 	}
+	if (result * sign < __INT_MAX__ * -1)
+		philo()->error = true;
 	return (result * sign);
 }
 int	ft_isdigit(int c)

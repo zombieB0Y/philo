@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:57:29 by zoentifi          #+#    #+#             */
-/*   Updated: 2025/06/17 16:07:06 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/06/17 21:58:15 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct s_philo
 	int					n_philo;
 	int					t_to_eat;
 	int					t_to_sleep;
+	int					n_meals;
 }						t_philo;
 // Node to track allocated pointers
 typedef struct t_GCNode
@@ -39,6 +40,7 @@ typedef struct s_seats
 {
 	pthread_t			philosopher_ID;
 	pthread_mutex_t		my_fork;
+	int					num_meals;
 	int					seat_number;
 	long long			last_meal;
 	t_philo				*philo;
@@ -54,14 +56,23 @@ typedef struct s_philosophers
 
 typedef struct timeval	t_timeval;
 
+typedef struct s_glm
+{
+	long long	last;
+	int			num_meals;
+}				t_glm;
+
 typedef struct s_status
 {
 	t_GCNode			*g_head;
 	t_philosophers		*table;
 	t_philo				*philo;
 	bool				is_dead;
+	bool				error;
+	bool				num_meals_active;
 	pthread_mutex_t		death;
 	pthread_mutex_t		write;
+	pthread_t			mod;
 	pthread_mutex_t		time_mutex;
 	long long			time;
 	pthread_mutex_t		meal;

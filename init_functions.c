@@ -6,7 +6,7 @@
 /*   By: zoentifi <zoentifi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 14:02:56 by zm                #+#    #+#             */
-/*   Updated: 2025/06/17 16:06:49 by zoentifi         ###   ########.fr       */
+/*   Updated: 2025/06/17 21:48:33 by zoentifi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,11 @@ bool	check_arg(char **av)
 
 bool	lone_philo(void)
 {
+	int	to_die;
+
+	to_die = philo()->philo->t_to_die;
 	print_msg(1, "has taken a fork");
-	slp(philo()->philo->t_to_die);
+	slp(to_die);
 	print_msg(1, "died");
 	gc_collect();
 	return (true);
@@ -64,15 +67,22 @@ t_philo	*init_status(int ac, char **argv)
 	int time_to_die;
 	int time_to_eat;
 	int time_to_sleep;
+	int	num_meals;
 
-	if (ac > 4 && check_arg(argv))
+	philo()->num_meals_active = false;
+	if (ac > 4)
 	{
 		num_philosophers = ft_atoi(argv[1]);
 		time_to_die = ft_atoi(argv[2]);
 		time_to_eat = ft_atoi(argv[3]);
 		time_to_sleep = ft_atoi(argv[4]);
 	}
-	else
+	if (ac > 5)
+	{
+		philo()->num_meals_active = true;
+		num_meals = ft_atoi(argv[5]);
+	}
+	if (philo()->error && !check_arg(argv))
 	{
 		printf("need valid arguments !\n");
 		return (NULL);
@@ -88,5 +98,6 @@ t_philo	*init_status(int ac, char **argv)
 	philo->t_to_die = time_to_die;
 	philo->t_to_eat = time_to_eat;
 	philo->t_to_sleep = time_to_sleep;
+	philo->n_meals = num_meals;
 	return (philo);
 }
